@@ -1,0 +1,160 @@
+C++基础
+1.  什么是虚函数，怎么实现？
+A virtual function is a member function of a class, whose functionality can be over-ridden in its derived classes. It is one that is declared as virtual in the base class using the virtual keyword. 
+
+The calls to the virtual member functions are resolved during run-time.  This mechanism is known as dynamic binding. The most prominent reason why a virtual function will be used is to have a different functionality in the derived class. The difference between a non-virtual member function and a virtual member function is, the non-virtual member functions are resolved at compile time.
+
+Whenever a program has a virtual function declared, a v - table is constructed for the class. The v-table consists of addresses to the virtual functions for classes that contain one or more virtual functions. The object of the class containing the virtual function contains a virtual pointer that points to the base address of the virtual table in memory. Whenever there is a virtual function call, the v-table is used to resolve to the function address. An object of the class that contains one or more virtual functions contains a virtual pointer called the vptr at the very beginning of the object in the memory. Hence the size of the object in this case increases by the size of the pointer. This vptr contains the base address of the virtual table in memory. Note that virtual tables are class specific, i.e., there is only one virtual table for a class irrespective of the number of virtual functions it contains. This virtual table in turn contains the base addresses of one or more virtual functions of the class. At the time when a virtual function is called on an object, the vptr of that object provides the base address of the virtual table for that class in memory. This table is used to resolve the function call as it contains the addresses of all the virtual functions of that class. This is how dynamic binding is resolved during a virtual function call.
+
+2. smart_pointer
+    Shared_pointer,是否线程安全，怎么让线程安全，怎么实现？ 
+    Unique_pointer，怎么实现 
+
+3. 什么是递归函数
+Recursive function, a procedure or subroutine that references itself
+
+4. OOP，敏捷开发的理解
+Object-oriented programming (OOP) is a programming paradigm based on the concept of "objects", which may contain data, in the form of fields, often known as attributes; and code, in the form of procedures, often known as methods. A feature of objects is that an object's procedures can access and often modify the data fields of the object with which they are associated (objects have a notion of "this" or "self"). In OOP, computer programs are designed by making them out of objects that interact with one another.[1][2] There is significant diversity of OOP languages, but the most popular ones are class-based, meaning that objects are instances of classes, which typically also determine their type.
+
+5. 指针、引用、堆栈的存储
+
+6. map、list、string基础原理
+
+7. 什么是hashmap
+
+8. STL
+
+9. list／vector区别？操作insert、delete哪个快
+
+10. struct／class区别，struct中如果没有指定属性，默认是public吗，那class呢？
+
+11. reference／pointer区别
+1) A pointer can be re-assigned any number of times while a reference cannot be re-seated after binding.
+2) Pointers can point nowhere (NULL), whereas reference always refer to an object.
+3) You can't take the address of a reference like you can with pointers.
+4) There's no "reference arithmetics" (but you can take the address of an object pointed by a reference and do pointer arithmetics on it as in &obj + 5).
+
+1. I++和++i区别
+
+2. macro和inline的区别
+
+3. empty class占多大的内存空间
+
+4. 是不是所有的类都有vtable
+
+5. 默认类的function有哪些？（四个）
+Default constructor
+Copy constructor
+Copy-assignment operator
+Destructor
+(Move constructor/ Move-assignment operator)
+
+6. C中static的作用
+In the C programming language, static is used with global variables and functions to set their scope to the containing file. In local variables, static is used to store the variable in the statically allocated memory instead of the automatically allocated memory. While the language does not dictate the implementation of either type of memory, statically allocated memory is typically reserved in data segment of the program at compile time, while the automatically allocated memory is normally implemented as a transient call stack.
+
+
+7. C/C++区别
+
+8. 设计模式
+
+9. Template
+
+10. cast operation。如果dynamic_cast没成功，得到什么
+
+11. RTTI
+
+12. 为什么有virtual destructor？
+
+13. operator overloading是在compiler time or run time确定调用具体哪个的？override、overload
+
+14. 实现在编译时计算整数的位数
+Sizeof is a compile time operator
+
+15. type of iterator
+
+16. stack overflow
+
+17. call by reference，call by pointer
+
+18. 5-bit addressing space
+
+19. Inherit
+
+20. how to avoid memory leak
+To avoid memory leaks, memory allocated on heap should always be freed when no longer needed
+Smart pointer
+
+21. 多态和虚函数表的内部细节
+
+22. 异常捕捉内部细节
+
+23. Extern "C"
+ 
+操作系统与网络等
+
+24. 如何实现多线程同步
+
+25. dead lock
+
+26. Tcp/ip三次握手
+
+27. udp tcp
+
+28. linux proc
+The /proc filesystem contains a illusionary filesystem. It does not exist on a disk. Instead, the kernel creates it in memory. It is used to provide information about the system (originally about processes, hence the name). 
+/proc
+/proc is very special in that it is also a virtual filesystem. It's sometimes referred to as a process information pseudo-file system. It doesn't contain 'real' files but runtime system information (e.g. system memory, devices mounted, hardware configuration, etc). For this reason it can be regarded as a control and information centre for the kernel. In fact, quite a lot of system utilities are simply calls to files in this directory. For example, 'lsmod' is the same as 'cat /proc/modules' while 'lspci' is a synonym for 'cat /proc/pci'. By altering files located in this directory you can even read/change kernel parameters (sysctl) while the system is running.
+
+29. semaphore与lock的区别
+
+30. PV操作的实现方法
+
+31. linux查看内存
+
+32. 数据库的join
+
+33. Linux create a process
+
+34. 寻找差异文件
+diff --bried -r dir1/  dir2/
+
+
+35. 进程和线程的区别
+Both processes and threads are independent sequences of execution. The typical difference is that threads (of the same process) run in a shared memory space, while processes run in separate memory spaces.
+
+36. Shell pid
+echo $$
+
+
+ 
+算法
+37. 什么是快排
+
+38. 算法求top10从百万条记录中，时间和空间复杂度
+First, preprocess these records. Using hash table to count numbers of each record. O(N)
+Then, find out Top K records with the help of max heap. O(N'logK)
+Time complexity: O(NlogK)
+Space complexity: O(N)
+
+39. 图的最短路径
+
+40. 几种排序算法
+
+41. 数据结构：二叉树的遍历方式
+
+42. 算法效率
+
+43. 红黑树的复杂度
+
+44. bst的pre-order，重构这个bst。要求最优解
+
+45. 一群士兵（1到N）绕城一个圈，每次从1开始，kill掉顺时针下一个数，几轮之后只剩下一个数，即为胜者，写出函数F（n），返回胜者
+
+46. 找出不重复的数（排序和不排序的）
+
+47. prime number
+
+48. Leetcode single number & single number III
+ 
+其他
+项目的展开，扮演的角色，遇到了什么困难怎么解决的
