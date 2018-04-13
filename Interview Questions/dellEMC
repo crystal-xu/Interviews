@@ -1,0 +1,26 @@
+1. What is deadlock? How to prevent deadlock?
+2. Greedy algorithm? Give an example.
+3. Dynamic programming? Give an example.(0-1)
+4. How to swap a and b without extra space? 
+5. Giving an array of N integers which are from 1 to N, except one that is replaced by -1. How to find the replaced integer?
+6. Giving a sorted array, construct a binary search tree.
+7. leetcode173: binary search tree iterator
+8. pipe in linux? How to use it?
+9. 10 producers and 5 consumers, how to design a multi-threading program? Which data structure? How to enable products being 
+   accessed by multiple consumer threads at the same time?(improve synchronization)
+10. C++ *, &, *& usage
+11. regular expression
+12. array, link list, run time
+13. binary search tree(tree map), hash table, advantages and disadvantages, run time; binary search tree(1, 2, 3, ...)worst 
+    case, run time
+14. balanced search tree
+15. How to debug multi-process programs?
+16. How to debug memory leak in C++? What tools?
+17. socket communication: reliabilty(How to ensure correctness of every bit of data?)
+18. How to avoid thread suspending? Once one thread fails to acquire mutex, it just skips to do other tasks until mutex is       available.
+
+summary
+1. algorithms(analysis: run time)
+2. data structure(array, link list, tree, hash table)
+3. c++ basis(memory leak)
+4. multi-threading, sychronization(deadlock, mutex, PV)
