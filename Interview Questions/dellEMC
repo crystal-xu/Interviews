@@ -1,23 +1,181 @@
 1. What is deadlock? How to prevent deadlock?
+
 2. Greedy algorithm? Give an example.
+
 3. Dynamic programming? Give an example.(0-1)
+
 4. How to swap a and b without extra space? 
+a = a + b; b = a - b; a = a - b;
+
 5. Giving an array of N integers which are from 1 to N, except one that is replaced by -1. How to find the replaced integer?
+
 6. Giving a sorted array, construct a binary search tree.
+
 7. leetcode173: binary search tree iterator
+
 8. pipe in linux? How to use it?
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Read characters from the pipe and echo them to stdout. */
+
+void
+read_from_pipe (int file)
+{
+  FILE *stream;
+  int c;
+  stream = fdopen (file, "r");
+  while ((c = fgetc (stream)) != EOF)
+    putchar (c);
+  fclose (stream);
+}
+
+/* Write some random text to the pipe. */
+
+void
+write_to_pipe (int file)
+{
+  FILE *stream;
+  stream = fdopen (file, "w");
+  fprintf (stream, "hello, world!\n");
+  fprintf (stream, "goodbye, world!\n");
+  fclose (stream);
+}
+
+int
+main (void)
+{
+  pid_t pid;
+  int mypipe[2];
+
+  /* Create the pipe. */
+  if (pipe (mypipe))
+    {
+      fprintf (stderr, "Pipe failed.\n");
+      return EXIT_FAILURE;
+    }
+
+  /* Create the child process. */
+  pid = fork ();
+  if (pid == (pid_t) 0)
+    {
+      /* This is the child process.
+         Close other end first. */
+      close (mypipe[1]);
+      read_from_pipe (mypipe[0]);
+      return EXIT_SUCCESS;
+    }
+  else if (pid < (pid_t) 0)
+    {
+      /* The fork failed. */
+      fprintf (stderr, "Fork failed.\n");
+      return EXIT_FAILURE;
+    }
+  else
+    {
+      /* This is the parent process.
+         Close other end first. */
+      close (mypipe[0]);
+      write_to_pipe (mypipe[1]);
+      return EXIT_SUCCESS;
+    }
+}
+
 9. 10 producers and 5 consumers, how to design a multi-threading program? Which data structure? How to enable products being 
    accessed by multiple consumer threads at the same time?(improve synchronization)
+   Producer-Consumer
+   FIFO
+   5 FIFO; 2 producers vs. 1 consumer
+   
 10. C++ *, &, *& usage
+It's a reference to a pointer to an int. This means the function in question can modify the pointer as well as the int itself.
+
+You can just pass a pointer in, the one complication being that the pointer needs to be an l-value, not just an r-value, so for example
+
+int myint;
+function(&myint);
+alone isn't sufficient and neither would 0/NULL be allowable, Where as:
+
+int myint;
+int *myintptr = &myint;
+function(myintptr);
+would be acceptable. When the function returns it's quite possible that myintptr would no longer point to what it was initially pointing to.
+
+int *myintptr = NULL;
+function(myintptr);
+might also make sense if the function was expecting to allocate the memory when given a NULL pointer. Check the documentation provided with
+the function (or read the source!) to see how the pointer is expected to be used.
+
 11. regular expression
+
 12. array, link list, run time
+
 13. binary search tree(tree map), hash table, advantages and disadvantages, run time; binary search tree(1, 2, 3, ...)worst 
     case, run time
+    
 14. balanced search tree
+
 15. How to debug multi-process programs?
+（trace的思路）gdb参数叫follow child，默认gdb是不处理子进程的。
+log.
+multi-thread/process的难点是执行流是并行的，想办法让日志分离可以解决问题。
+pid+threadid去做grep
+multi-process有个场景就是，数据会跨主机。需要一个类似的id，方便把跨机器的log关联起来：taskid或者requestid。比如，一个task进来的时候，给它分配
+一个全局唯一的taskid，然后一直往下传，保持不变。
+写点工具去做这些事儿的grep：./findtask --id==xxxxx，自动去所有机器上拖taskid=xxx的日志出来，就可以全部看清楚task的任务流
+
 16. How to debug memory leak in C++? What tools?
+sanitizer, valgrind
+valgrind的工作原理是实现了一个叫做VXE的解释器，它有自己的IR，叫做VEX IR。VXE解释器去执行VEX IR。
+valgrind会在程序启动之前，把二进制翻译成VEX IR。它会找到所有的malloc free函数，然后把这两个调用替换成自己的实现。
+IR就是一种中间字节码，可以理解为java的字节码，和CPU指令差不多。然后，对于所有内存操作的IR，会加上内存边界检测（malloc free被替换了，malloc free里面
+会维护每块内存的有效长度）。一旦发现访问了没有申请的内存，要么warning，顺带通过malloc free的记录看这块内存在哪里申请释放的
+泄露：既然有能力修改所有的malloc free，就有能力记录哪里申请的，是不是没释放。
+valgrind是在运行时做的，sanitizer是把这个事儿挪到了编译时，malloc／free在编译时被替换掉。那些指令，也是编译时被替换掉的，前面检测了内存边界
+的代码。
+只是要检测泄露的话，实现一个malloc free，记录下malloc的堆栈，同时记录返回的指针的地址。free的时候，根据这个地址去查申请记录，是否申请了，申请过，
+那么就删掉这个堆栈。程序运行结束了，还保留的堆栈，就是没释放的申请上下文。
+
 17. socket communication: reliabilty(How to ensure correctness of every bit of data?)
-18. How to avoid thread suspending? Once one thread fails to acquire mutex, it just skips to do other tasks until mutex is       available.
+
+18. How to avoid thread suspending? Once one thread fails to acquire mutex, it just skips to do other tasks until mutex is available.
+try_lock()
+#include <chrono>
+#include <mutex>
+#include <thread>
+#include <iostream> // std::cout
+ 
+std::chrono::milliseconds interval(100);
+ 
+std::mutex mutex;
+int job_shared = 0; // both threads can modify 'job_shared',
+    // mutex will protect this variable
+ 
+int job_exclusive = 0; // only one thread can modify 'job_exclusive'
+    // no protection needed
+ 
+// this thread can modify both 'job_shared' and 'job_exclusive'
+void job_1() 
+{
+    std::this_thread::sleep_for(interval); // let 'job_2' take a lock
+ 
+    while (true) {
+        // try to lock mutex to modify 'job_shared'
+        if (mutex.try_lock()) {
+            std::cout << "job shared (" << job_shared << ")\n";
+            mutex.unlock();
+            return;
+        } else {
+            // can't get lock to modify 'job_shared'
+            // but there is some other work to do
+            ++job_exclusive;
+            std::cout << "job exclusive (" << job_exclusive << ")\n";
+            std::this_thread::sleep_for(interval);
+        }
+    }
+}
 
 summary
 1. algorithms(analysis: run time)
