@@ -1,10 +1,18 @@
 C++基础
 1.  什么是虚函数，怎么实现？
-A virtual function is a member function of a class, whose functionality can be over-ridden in its derived classes. It is one that is declared as virtual in the base class using the virtual keyword. 
-
-The calls to the virtual member functions are resolved during run-time.  This mechanism is known as dynamic binding. The most prominent reason why a virtual function will be used is to have a different functionality in the derived class. The difference between a non-virtual member function and a virtual member function is, the non-virtual member functions are resolved at compile time.
-
-Whenever a program has a virtual function declared, a v - table is constructed for the class. The v-table consists of addresses to the virtual functions for classes that contain one or more virtual functions. The object of the class containing the virtual function contains a virtual pointer that points to the base address of the virtual table in memory. Whenever there is a virtual function call, the v-table is used to resolve to the function address. An object of the class that contains one or more virtual functions contains a virtual pointer called the vptr at the very beginning of the object in the memory. Hence the size of the object in this case increases by the size of the pointer. This vptr contains the base address of the virtual table in memory. Note that virtual tables are class specific, i.e., there is only one virtual table for a class irrespective of the number of virtual functions it contains. This virtual table in turn contains the base addresses of one or more virtual functions of the class. At the time when a virtual function is called on an object, the vptr of that object provides the base address of the virtual table for that class in memory. This table is used to resolve the function call as it contains the addresses of all the virtual functions of that class. This is how dynamic binding is resolved during a virtual function call.
+A virtual function is a member function of a class, whose functionality can be over-ridden in its derived classes. It is one that is declared as virtual in 
+the base class using the virtual keyword. 
+The calls to the virtual member functions are resolved during run-time.  This mechanism is known as dynamic binding. The most prominent reason why a virtual 
+function will be used is to have a different functionality in the derived class. The difference between a non-virtual member function and a virtual member function is, 
+the non-virtual member functions are resolved at compile time.
+Whenever a program has a virtual function declared, a v - table is constructed for the class. The v-table consists of addresses to the virtual functions for classes that 
+contain one or more virtual functions. The object of the class containing the virtual function contains a virtual pointer that points to the base address of the virtual 
+table in memory. Whenever there is a virtual function call, the v-table is used to resolve to the function address. An object of the class that contains one or more virtual 
+functions contains a virtual pointer called the vptr at the very beginning of the object in the memory. Hence the size of the object in this case increases by the size of the pointer. 
+This vptr contains the base address of the virtual table in memory. Note that virtual tables are class specific, i.e., there is only one virtual table for a class irrespective of the number of 
+virtual functions it contains. This virtual table in turn contains the base addresses of one or more virtual functions of the class. At the time when a virtual function is called on an object,
+the vptr of that object provides the base address of the virtual table for that class in memory. This table is used to resolve the function call as it contains the addresses of all the virtual 
+functions of that class. This is how dynamic binding is resolved during a virtual function call.
 
 2. smart_pointer
     Shared_pointer,是否线程安全，怎么让线程安全，怎么实现？ 
@@ -14,7 +22,11 @@ Whenever a program has a virtual function declared, a v - table is constructed f
 Recursive function, a procedure or subroutine that references itself
 
 4. OOP，敏捷开发的理解
-Object-oriented programming (OOP) is a programming paradigm based on the concept of "objects", which may contain data, in the form of fields, often known as attributes; and code, in the form of procedures, often known as methods. A feature of objects is that an object's procedures can access and often modify the data fields of the object with which they are associated (objects have a notion of "this" or "self"). In OOP, computer programs are designed by making them out of objects that interact with one another.[1][2] There is significant diversity of OOP languages, but the most popular ones are class-based, meaning that objects are instances of classes, which typically also determine their type.
+Object-oriented programming (OOP) is a programming paradigm based on the concept of "objects", which may contain data, in the form of fields, often known
+as attributes; and code, in the form of procedures, often known as methods. A feature of objects is that an object's procedures can access and often modify
+the data fields of the object with which they are associated (objects have a notion of "this" or "self"). In OOP, computer programs are designed by making 
+them out of objects that interact with one another.[1][2] There is significant diversity of OOP languages, but the most popular ones are class-based, meaning
+that objects are instances of classes, which typically also determine their type.
 
 5. 指针、引用、堆栈的存储
 
